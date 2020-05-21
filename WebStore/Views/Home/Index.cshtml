@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebStore.Models.Employee>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="witdh=device-witdh" />
+    <title>Первое приложение @ViewBag.Title</title>
+</head>
+
+<body>
+    <h3>Сотрудники!</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Возраст</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.Surname</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.Patronymic</td>
+                    <td>@employee.Age</td>
+                    <td><a href="/Home/EmployeeDetails/@employee.Id">Инфо.</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>
