@@ -38,13 +38,7 @@ namespace WebStore.Controllers
         };
 
 
-        public IActionResult Index()
-        {
-            //ViewBag.Title = "Hello World";
-            ViewData["Title"] = "Hello World!";
-
-            return View(__Employees);
-        }
+        public IActionResult Index() => View();
 
         public IActionResult EmployeeDetails(int id)
         {
