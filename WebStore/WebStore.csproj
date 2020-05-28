@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\Services\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
