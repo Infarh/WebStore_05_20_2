@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Data;
+using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
+using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {
@@ -10,19 +13,74 @@ namespace WebStore.Controllers
     //[Route("Staff")]
     public class EmployeesController : Controller
     {
-        private static readonly List<Employee> __Employees = TestData.Employees;
+        private readonly IEmployeesData _EmployeesData;
+
+        public EmployeesController(IEmployeesData EmployeesData)
+        {
+            _EmployeesData = EmployeesData;
+        }
 
         //[Route("List")]
-        public IActionResult Index() => View(__Employees);
+        public IActionResult Index() => View(_EmployeesData.Get());
 
         //[Route("{id}")]
         public IActionResult EmployeeDetails(int id)
         {
-            var employee = __Employees.FirstOrDefault(e => e.Id == id);
+            var employee = _EmployeesData.GetById(id);
             if (employee is null)
                 return NotFound();
 
             return View(employee);
         }
+
+        #region Редактирование
+        
+        public IActionResult Edit(int? Id)
+        {
+            if (Id is null) return View(new EmployeeViewModel());
+
+            if (Id < 0)
+                return BadRequest();
+
+            var employee = _EmployeesData.GetById((int) Id);
+            if (employee is null)
+                return NotFound();
+
+            return View(new EmployeeViewModel
+            {
+                Id = employee.Id,
+                Surname = employee.Surname,
+                Name = employee.FirstName,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age
+            });
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EmployeeViewModel Model)
+        {
+            if(Model is null)
+                throw new ArgumentNullException(nameof(Model));
+
+            var employee = new Employee
+            {
+                Id = Model.Id,
+                FirstName = Model.Name,
+                Surname = Model.Surname,
+                Patronymic = Model.Patronymic,
+                Age = Model.Age
+            };
+
+            if (Model.Id == 0)
+                _EmployeesData.Add(employee);
+            else
+                _EmployeesData.Edit(employee);
+
+            _EmployeesData.SaveChanges();
+
+            return RedirectToAction("Index");
+        } 
+
+        #endregion
     }
 }
