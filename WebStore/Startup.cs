@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +38,16 @@ namespace WebStore
 
             app.UseStaticFiles();
             app.UseDefaultFiles();
+
+            app.UseWelcomePage("/MVC");
+
+            app.Use(async (context, next) =>
+            {
+                Debug.WriteLine($"Request to {context.Request.Path}");
+                await next(); // Можем прервать конвейер не вызывая await next()
+                // постобработка
+            });
+            //app.UseMiddleware<>()
 
             app.UseRouting();
 
