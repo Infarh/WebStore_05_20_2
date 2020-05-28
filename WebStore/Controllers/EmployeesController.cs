@@ -34,7 +34,7 @@ namespace WebStore.Controllers
         }
 
         #region Редактирование
-        
+
         public IActionResult Edit(int? Id)
         {
             if (Id is null) return View(new EmployeeViewModel());
@@ -42,7 +42,7 @@ namespace WebStore.Controllers
             if (Id < 0)
                 return BadRequest();
 
-            var employee = _EmployeesData.GetById((int) Id);
+            var employee = _EmployeesData.GetById((int)Id);
             if (employee is null)
                 return NotFound();
 
@@ -59,7 +59,7 @@ namespace WebStore.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel Model)
         {
-            if(Model is null)
+            if (Model is null)
                 throw new ArgumentNullException(nameof(Model));
 
             var employee = new Employee
@@ -79,7 +79,39 @@ namespace WebStore.Controllers
             _EmployeesData.SaveChanges();
 
             return RedirectToAction("Index");
-        } 
+        }
+
+        #endregion
+
+        #region Удаление
+
+        public IActionResult Delete(int id)
+        {
+            if (id <= 0)
+                return BadRequest();
+
+            var employee = _EmployeesData.GetById(id);
+            if (employee is null)
+                return NotFound();
+
+            return View(new EmployeeViewModel
+            {
+                Id = employee.Id,
+                Surname = employee.Surname,
+                Name = employee.FirstName,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age
+            });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _EmployeesData.Delete(id);
+            _EmployeesData.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
 
         #endregion
     }
