@@ -32,7 +32,8 @@ namespace WebStore
                     //opt.Conventions
                     //opt.Conventions.Add();
                 })
-               .AddRazorRuntimeCompilation();
+               .AddRazorRuntimeCompilation()
+               .AddViewLocalization();
 
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
         }
@@ -48,7 +49,7 @@ namespace WebStore
             app.UseStaticFiles();
             app.UseDefaultFiles();
 
-            app.UseMiddleware<CultureMiddleware>();
+            //app.UseMiddleware<CultureMiddleware>();
             var supported_cultures = new []
             {
                 new CultureInfo("ru"),

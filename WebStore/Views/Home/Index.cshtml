@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Loc
+@{
     ViewData["Title"] = "Каталог товаров";
 }
 
@@ -6,6 +8,7 @@
 
 <section>
     <div class="container">
+        <p>@Loc["Заголовок"]</p>
         <div class="row">
             <div class="col-sm-3">
                 <partial name="Partial/_LeftSideBar"/>
@@ -15,7 +18,7 @@
                 <partial name="Partial/_FeaturesItems"/>
 
                 <partial name="Partial/_CategoryTab"/>
-                
+
                 <partial name="Partial/_RecomendedItems"/>
             </div>
         </div>
