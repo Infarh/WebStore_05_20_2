@@ -1,12 +1,15 @@
 using System.Diagnostics;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Hosting;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Middleware;
 using WebStore.Infrastructure.Services;
 
 namespace WebStore
@@ -40,9 +43,22 @@ namespace WebStore
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-
+            
             app.UseStaticFiles();
             app.UseDefaultFiles();
+
+            app.UseMiddleware<CultureMiddleware>();
+            var supported_cultures = new []
+            {
+                new CultureInfo("ru"),
+                new CultureInfo("en"),
+            };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ru"),
+                SupportedCultures = supported_cultures,
+                SupportedUICultures = supported_cultures
+            });
 
             app.UseWelcomePage("/MVC");
 
