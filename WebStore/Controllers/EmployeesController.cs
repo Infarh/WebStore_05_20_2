@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using WebStore.Data;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
@@ -14,10 +15,12 @@ namespace WebStore.Controllers
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _EmployeesData;
+        private readonly IStringLocalizer<EmployeesController> _Loc;
 
-        public EmployeesController(IEmployeesData EmployeesData)
+        public EmployeesController(IEmployeesData EmployeesData, IStringLocalizer<EmployeesController> Loc)
         {
             _EmployeesData = EmployeesData;
+            _Loc = Loc;
         }
 
         //[Route("List")]
@@ -26,6 +29,7 @@ namespace WebStore.Controllers
         //[Route("{id}")]
         public IActionResult EmployeeDetails(int id)
         {
+            var str = _Loc["Test"];
             var employee = _EmployeesData.GetById(id);
             if (employee is null)
                 return NotFound();

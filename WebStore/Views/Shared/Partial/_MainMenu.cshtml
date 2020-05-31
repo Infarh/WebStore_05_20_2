@@ -1,4 +1,7 @@
-﻿<ul class="nav navbar-nav collapse navbar-collapse">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Loc
+
+<ul class="nav navbar-nav collapse navbar-collapse">
     <li><a href="index.html" class="active">Home</a></li>
     <li class="dropdown">
         <a href="#">Shop<i class="fa fa-angle-down"></i></a>
@@ -19,5 +22,5 @@
     </li>
     <li><a href="404.html">Error page 404</a></li>
     <li><a href="contact-us.html">Contact</a></li>
-    <li><a asp-controller="Employees" asp-action="Index">Сотрудники</a></li>
+    <li><a asp-controller="Employees" asp-action="Index">@Loc["Сотрудники"]</a></li>
 </ul>

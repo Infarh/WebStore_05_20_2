@@ -1,5 +1,9 @@
-﻿<section id="advertisement">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Loc
+
+<section id="advertisement">
     <div class="container">
-        <img src="~/images/shop/advertisement.jpg" alt="" />
+        <p>@Loc["ads"]</p>
+        <img src="~/images/shop/advertisement.jpg" alt=""/>
     </div>
 </section>
