@@ -25,6 +25,7 @@ namespace WebStore
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(opt => opt.ResourcesPath = "Resources");
             services.AddControllersWithViews(opt =>
                 {   
                     //opt.Filters.Add<>()
