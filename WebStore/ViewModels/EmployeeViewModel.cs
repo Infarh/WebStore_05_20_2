@@ -11,6 +11,7 @@ namespace WebStore.ViewModels
         [Display(Name = "Имя")]
         [Required(ErrorMessage = "Имя является обязательным")]
         [StringLength(200, MinimumLength = 3, ErrorMessage = "Длина имени должна быть от 3 до 200 символов")]
+        [RegularExpression(@"([А-ЯЁ][а-яё]+)|([A-Z][a-z]+)", ErrorMessage = "Ошибка формата имени")]
         public string Name { get; set; }
 
         [Display(Name = "Фамилия")]
@@ -23,7 +24,7 @@ namespace WebStore.ViewModels
 
         [Display(Name = "Возраст")]
         [Required]
-        [Range(20, 70, ErrorMessage = "Возраст должен быть в пределах от 20 до 70 лет")]
+        [Range(20, 80, ErrorMessage = "Возраст должен быть в пределах от 20 до 70 лет")]
         public int Age { get; set; }
 
         //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

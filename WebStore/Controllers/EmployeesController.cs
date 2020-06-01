@@ -62,6 +62,12 @@ namespace WebStore.Controllers
             if (Model is null)
                 throw new ArgumentNullException(nameof(Model));
 
+            if(Model.Age < 18 || Model.Age > 75)
+                ModelState.AddModelError("Age", "Сотрудник не проходит по возрасту");
+
+            if(Model.Name == "123" && Model.Surname == "QWE")
+                ModelState.AddModelError(string.Empty, "Странное сочетание имени и фамилии");
+
             if (!ModelState.IsValid)
                 return View(Model);
 
