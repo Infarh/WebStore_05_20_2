@@ -1,4 +1,6 @@
-﻿@{
+﻿@using WebStore.Infrastructure.Interfaces
+@inject IProductData ProductData
+@{
     ViewData["Title"] = "Каталог товаров";
 }
 
@@ -12,7 +14,7 @@
             </div>
 
             <div class="col-sm-9 padding-right">
-                @*<partial name="Partial/_FeaturesItems"/>*@
+                <partial name="Partial/_FeaturesItems" model="ProductData.GetProducts().Take(6).Select(p => new ProductViewModel { Id = p.Id, Name = p.Name, Order = p.Order, Price = p.Price, ImageUrl = p.ImageUrl }).OrderBy(p => p.Order)"/>
 
                 <partial name="Partial/_CategoryTab"/>
                 
