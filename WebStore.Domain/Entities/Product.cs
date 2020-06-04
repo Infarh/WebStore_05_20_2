@@ -17,7 +17,7 @@ namespace WebStore.Domain.Entities
 
         public int? BrandId { get; set; }
 
-        [ForeignKey(nameof(Brand))]
+        [ForeignKey(nameof(BrandId))]
         public virtual Brand Brand { get; set; }
 
         [Required]
