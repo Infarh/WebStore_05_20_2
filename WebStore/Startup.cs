@@ -8,6 +8,8 @@ using WebStore.DAL.Context;
 using WebStore.Data;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Services;
+using WebStore.Infrastructure.Services.InMemory;
+using WebStore.Infrastructure.Services.InSQL;
 
 namespace WebStore
 {
@@ -27,19 +29,13 @@ namespace WebStore
             services.AddTransient<WebStoreDBInitializer>();
 
 
-            services.AddControllersWithViews(opt =>
-                {   
-                    //opt.Filters.Add<>()
-                    //opt.Conventions
-                    //opt.Conventions.Add();
-                })
+            services.AddControllersWithViews()
                .AddRazorRuntimeCompilation();
 
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
-            //services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
-            //services.AddScoped<IEmployeesData, InMemoryEmployeesData>();
 
-            services.AddSingleton<IProductData, InMemoryProductData>();
+            //services.AddSingleton<IProductData, InMemoryProductData>();
+            services.AddScoped<IProductData, SqlProductData>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
