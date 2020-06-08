@@ -53,7 +53,7 @@ namespace WebStore
 
             services.ConfigureApplicationCookie(opt =>
             {
-                opt.Cookie.Name = "WebStore.GeekBrains.ru";
+                opt.Cookie.Name = "WebStore";
                 opt.Cookie.HttpOnly = true;
                 opt.ExpireTimeSpan = TimeSpan.FromDays(10);
 
@@ -86,6 +86,8 @@ namespace WebStore
 
             app.UseStaticFiles();
             app.UseDefaultFiles();
+
+            app.UseAuthentication();
 
             app.UseWelcomePage("/MVC");
 
