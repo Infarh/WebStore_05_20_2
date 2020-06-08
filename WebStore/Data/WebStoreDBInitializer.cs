@@ -19,6 +19,17 @@ namespace WebStore.Data
 
             db.Migrate();
             
+            if(!_db.Employees.Any())
+                using (db.BeginTransaction())
+                {
+                    var employees = TestData.Employees.ToList();
+                    //foreach (var employee in employees)
+                    //    employee.Id = 0;
+                    employees.ForEach(e => e.Id = 0);
+
+                    _db.Employees.AddRange(employees);
+                }
+
             if(_db.Products.Any()) return;
 
             using (db.BeginTransaction())
