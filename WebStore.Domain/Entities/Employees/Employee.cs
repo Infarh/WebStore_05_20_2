@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using WebStore.Domain.Entities.Base;
 
-namespace WebStore.Models
+namespace WebStore.Domain.Entities.Employees
 {
-    public class Employee
+    public class Employee : BaseEntity
     {
-        public int Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string Surname { get; set; }

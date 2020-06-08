@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Data;
+using WebStore.Domain.Entities.Employees;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Models;
 using WebStore.ViewModels;
 
 namespace WebStore.Controllers

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities.Employees;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Models;
 
 namespace WebStore.Infrastructure.Services.InSQL
 {
