@@ -31,7 +31,7 @@ namespace WebStore.Controllers
                 UserName = Model.UserName
             };
 
-            var registration_result = await _UserManager.CreateAsync(user);
+            var registration_result = await _UserManager.CreateAsync(user, Model.Password);
             if (registration_result.Succeeded)
             {
                 await _SignInManager.SignInAsync(user, false);
@@ -59,7 +59,7 @@ namespace WebStore.Controllers
                 Model.UserName,
                 Model.Password,
                 Model.RememberMe,
-                true);
+                false);
 
             if (login_result.Succeeded)
             {
@@ -68,7 +68,7 @@ namespace WebStore.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError(string.Empty, "Неверное имя пользвоателя, или пароль!");
+            ModelState.AddModelError(string.Empty, "Неверное имя пользователя, или пароль!");
 
             return View(Model);
         }

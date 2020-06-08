@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WebStore.Data;
 using WebStore.Domain.Entities.Employees;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.ViewModels;
@@ -11,6 +8,7 @@ namespace WebStore.Controllers
 {
     //[Route("NewRoute/[controller]/123")]
     //[Route("Staff")]
+    //[Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _EmployeesData;
@@ -24,6 +22,7 @@ namespace WebStore.Controllers
         public IActionResult Index() => View(_EmployeesData.Get());
 
         //[Route("{id}")]
+        //[Authorize]
         public IActionResult EmployeeDetails(int id)
         {
             var employee = _EmployeesData.GetById(id);
