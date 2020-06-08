@@ -48,7 +48,7 @@ namespace WebStore.Controllers
 
         #region Login user
         
-        public IActionResult Login() => View(new LoginViewModel());
+        public IActionResult Login(string ReturnUrl) => View(new LoginViewModel { ReturnUrl = ReturnUrl});
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel Model)
