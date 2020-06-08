@@ -55,9 +55,22 @@ namespace WebStore.Controllers
         {
             if (!ModelState.IsValid) return View(Model);
 
+            var login_result = await _SignInManager.PasswordSignInAsync(
+                Model.UserName,
+                Model.Password,
+                Model.RememberMe,
+                true);
 
+            if (login_result.Succeeded)
+            {
+                if (Url.IsLocalUrl(Model.ReturnUrl))
+                    return Redirect(Model.ReturnUrl);
+                return RedirectToAction("Index", "Home");
+            }
 
-            return RedirectToAction("Index", "Home");
+            ModelState.AddModelError(string.Empty, "Неверное имя пользвоателя, или пароль!");
+
+            return View(Model);
         }
 
         #endregion
