@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebStore.Domain.Entities.Employees.Employee>
+﻿@using WebStore.Domain.Entities.Identity
+@model IEnumerable<WebStore.Domain.Entities.Employees.Employee>
 @{
     ViewData["Title"] = "Index";
 }
@@ -17,7 +18,10 @@
             <th>Имя</th>
             <th>Отчество</th>
             <th>Возраст</th>
-            <th></th>
+            @if (User.IsInRole(Role.Administrator))
+            {
+                <th></th>
+            }
         </tr>
         </thead>
         <tbody>
@@ -35,14 +39,17 @@
                 <td>@employee.Patronymic</td>
                 <td>@employee.Age</td>
                 @*<td><a href="@Url.Action("EmployeeDetails", "Employees")">Информация</a></td>*@
-                <td>
-                    <a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a asp-controller="Employees" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                </td>
+                @if (User.IsInRole(Role.Administrator))
+                {
+                    <td>
+                        <a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a asp-controller="Employees" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </td>
+                }
             </tr>
         }
         </tbody>
