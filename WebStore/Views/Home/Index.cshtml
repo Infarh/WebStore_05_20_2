@@ -15,7 +15,7 @@
             </div>
 
             <div class="col-sm-9 padding-right">
-                <partial name="Partial/_FeaturesItems" model="ProductData.GetProducts().Take(6).Select(p => p.ToView()).OrderBy(p => p.Order)"/>
+                <partial name="Partial/_FeaturesItems" model="ProductData.GetProducts().Take(6).ToView().OrderBy(p => p.Order)"/>
 
                 <partial name="Partial/_CategoryTab"/>
                 
