@@ -1,4 +1,4 @@
-﻿@model CartViewModel
+﻿@model CartOrderViewModel
 @{
     ViewData["Title"] = "Корзина";
 }
@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var (product, quantity) in Model.Items)
+                    @foreach (var (product, quantity) in Model.Cart.Items)
                     {
                         <tr>
                             <td class="cart_product">
