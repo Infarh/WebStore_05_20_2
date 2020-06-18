@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Employees;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Domain.Entities.Orders;
 
 namespace WebStore.DAL.Context
 {
@@ -15,6 +16,10 @@ namespace WebStore.DAL.Context
         public DbSet<Brand> Brands { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
         
         public WebStoreDB(DbContextOptions<WebStoreDB> Options) : base(Options) { }
     }
