@@ -21,7 +21,7 @@ namespace WebStore.ServiceHosting
         {
             services.AddDbContext<WebStoreDB>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<WebStoreDBInitializer>();
+            //services.AddTransient<WebStoreDBInitializer>();
 
             services.AddControllers();
 
@@ -29,9 +29,9 @@ namespace WebStore.ServiceHosting
                .AddScoped<IEmployeesData, SqlEmployeesData>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*, WebStoreDBInitializer db*/)
         {
-            db.Initialize();
+            //db.Initialize();
 
             if (env.IsDevelopment())
             {
