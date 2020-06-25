@@ -18,7 +18,7 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpGet("sections")] //api/products/sections
         public IEnumerable<Section> GetSections() => _ProductData.GetSections();
 
-        [HttpGet("brands")] //api/products/barands
+        [HttpGet("brands")] //api/products/brands
         public IEnumerable<Brand> GetBrands() => _ProductData.GetBrands();
 
         [HttpPost]
