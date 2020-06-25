@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
@@ -26,27 +27,28 @@ namespace WebStore.Clients.Base
         }
 
         public T Get<T>(string url) => GetAsync<T>(url).Result;
-        public async Task<T> GetAsync<T>(string url)
+        public async Task<T> GetAsync<T>(string url, CancellationToken Cancel = default)
         {
-            var responsee = await _Client.GetAsync(url);
-            return await responsee.EnsureSuccessStatusCode().Content.ReadAsAsync<T>();
+            var responsee = await _Client.GetAsync(url, Cancel);
+            return await responsee.EnsureSuccessStatusCode().Content.ReadAsAsync<T>(Cancel);
         }
 
         public HttpResponseMessage Post<T>(string url, T item) => PostAsync(url, item).Result;
-        public async Task<HttpResponseMessage> PostAsync<T>(string url, T item)
+        public async Task<HttpResponseMessage> PostAsync<T>(string url, T item, CancellationToken Cancel = default)
         {
-            var response = await _Client.PostAsJsonAsync(url, item);
+            var response = await _Client.PostAsJsonAsync(url, item, Cancel);
             return response.EnsureSuccessStatusCode();
         }
 
         public HttpResponseMessage Put<T>(string url, T item) => PutAsync(url, item).Result;
-        public async Task<HttpResponseMessage> PutAsync<T>(string url, T item)
+        public async Task<HttpResponseMessage> PutAsync<T>(string url, T item, CancellationToken Cancel = default)
         {
-            var response = await _Client.PutAsJsonAsync(url, item);
+            var response = await _Client.PutAsJsonAsync(url, item, Cancel);
             return response.EnsureSuccessStatusCode();
         }
 
         public HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
-        public async Task<HttpResponseMessage> DeleteAsync(string url) => await _Client.DeleteAsync(url);
+        public async Task<HttpResponseMessage> DeleteAsync(string url, CancellationToken Cancel = default) => 
+            await _Client.DeleteAsync(url, Cancel);
     }
 }
