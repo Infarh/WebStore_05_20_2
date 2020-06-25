@@ -1,6 +1,7 @@
 ﻿@using AutoMapper
 @using WebStore.Domain.ViewModels
 @using WebStore.Interfaces.Services
+@using WebStore.Services.Mapping
 @inject IProductData ProductData
 @inject IMapper Mapper
 @{
@@ -18,7 +19,7 @@
 
             <div class="col-sm-9 padding-right">
                 @*<partial name="Partial/_FeaturesItems" model="ProductData.GetProducts().Take(6).ToView().OrderBy(p => p.Order)"/>*@
-                <partial name="Partial/_FeaturesItems" model="ProductData.GetProducts().Take(6).Select(Mapper.Map<ProductViewModel>).OrderBy(p => p.Order)"/>
+                <partial name="Partial/_FeaturesItems" model="ProductData.GetProducts().Select(p => p.FromDTO()).Take(6).Select(Mapper.Map<ProductViewModel>).OrderBy(p => p.Order)"/>
 
                 <partial name="Partial/_CategoryTab"/>
                 

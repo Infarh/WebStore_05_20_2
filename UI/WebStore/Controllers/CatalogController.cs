@@ -29,6 +29,7 @@ namespace WebStore.Controllers
                 SectionId = SectionId,
                 BrandId = BrandId,
                 Products = products
+                   .Select(p => p.FromDTO())
                    .Select(Mapper.Map<ProductViewModel>)
                    //.Select(p => Mapper.Map<ProductViewModel>(p))
                    //.ToView()
