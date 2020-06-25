@@ -43,7 +43,7 @@ namespace WebStore.Controllers
             if (product is null)
                 return NotFound();
 
-            return View(product.ToView());
+            return View(product.FromDTO().ToView());
         }
     }
 }
