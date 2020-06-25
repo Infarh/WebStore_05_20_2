@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
 namespace WebStore.Clients.Base
@@ -24,5 +25,28 @@ namespace WebStore.Clients.Base
             };
         }
 
+        public T Get<T>(string url) => GetAsync<T>(url).Result;
+        public async Task<T> GetAsync<T>(string url)
+        {
+            var responsee = await _Client.GetAsync(url);
+            return await responsee.EnsureSuccessStatusCode().Content.ReadAsAsync<T>();
+        }
+
+        public HttpResponseMessage Post<T>(string url, T item) => PostAsync(url, item).Result;
+        public async Task<HttpResponseMessage> PostAsync<T>(string url, T item)
+        {
+            var response = await _Client.PostAsJsonAsync(url, item);
+            return response.EnsureSuccessStatusCode();
+        }
+
+        public HttpResponseMessage Put<T>(string url, T item) => PutAsync(url, item).Result;
+        public async Task<HttpResponseMessage> PutAsync<T>(string url, T item)
+        {
+            var response = await _Client.PutAsJsonAsync(url, item);
+            return response.EnsureSuccessStatusCode();
+        }
+
+        public HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
+        public async Task<HttpResponseMessage> DeleteAsync(string url) => await _Client.DeleteAsync(url);
     }
 }
