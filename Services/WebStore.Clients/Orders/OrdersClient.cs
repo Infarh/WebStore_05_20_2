@@ -20,7 +20,7 @@ namespace WebStore.Clients.Orders
         }
 
         public async Task<IEnumerable<OrderDTO>> GetUserOrders(string UserName) =>
-            await GetAsync<IEnumerable<OrderDTO>>($"{_ServiceAddress}/{UserName}");
+            await GetAsync<IEnumerable<OrderDTO>>($"{_ServiceAddress}/user/{UserName}");
 
         public async Task<OrderDTO> GetOrderById(int id) => await GetAsync<OrderDTO>($"{_ServiceAddress}/{id}");
     }
