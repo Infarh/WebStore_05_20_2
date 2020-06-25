@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebStore.Domain.DTO.Order;
 using WebStore.Domain.ViewModels;
 using WebStore.Interfaces.Services;
 
@@ -51,7 +53,20 @@ namespace WebStore.Controllers
                     Order = Model
                 });
 
-            var order = await OrderService.CreateOrder(User.Identity.Name, _CartService.TransformFromCart(), Model);
+            var order_model = new CreateOrderModel
+            {
+                Order = Model,
+                Items = _CartService.TransformFromCart().Items
+                   .Select(item => new OrderItemDTO
+                    {
+                        Id = item.Product.Id,
+                        Price = item.Product.Price,
+                        Quantity = item.Quantity
+                    })
+                   .ToList()
+            };
+
+            var order = await OrderService.CreateOrder(User.Identity.Name, order_model);
 
             _CartService.RemoveAll();
 
