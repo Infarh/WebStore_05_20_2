@@ -23,14 +23,28 @@ namespace WebStore.ServiceHosting.Controllers
         public Employee GetById(int id) => _EmployeesData.GetById(id);
 
         [HttpPost]
-        public int Add([FromBody] Employee Employee) => _EmployeesData.Add(Employee);
+        public int Add([FromBody] Employee Employee)
+        {
+            var id = _EmployeesData.Add(Employee);
+            SaveChanges();
+            return id;
+        }
 
         [HttpPut]
-        public void Edit(Employee Employee) => _EmployeesData.Edit(Employee);
+        public void Edit(Employee Employee)
+        {
+            _EmployeesData.Edit(Employee);
+            SaveChanges();
+        }
 
         //[HttpDelete("delete/{id}")] //http://localhost:5001/api/employees/delete/15
         [HttpDelete("{id}")]
-        public bool Delete(int id) => _EmployeesData.Delete(id);
+        public bool Delete(int id)
+        {
+            var success = _EmployeesData.Delete(id);
+            SaveChanges();
+            return success;
+        }
 
         //[HttpGet("Test/{Start}-{Stop}")] //http://localhost:5001/api/employees/Test/2005.05.07-2007.08.09
         //public ActionResult Test(DateTime Start, DateTime Stop) => Ok();
