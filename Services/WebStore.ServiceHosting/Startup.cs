@@ -27,7 +27,8 @@ namespace WebStore.ServiceHosting
 
             services
                .AddScoped<IEmployeesData, SqlEmployeesData>()
-               .AddScoped<IProductData, SqlProductData>();
+               .AddScoped<IProductData, SqlProductData>()
+               .AddScoped<IOrderService, SqlOrderService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*, WebStoreDBInitializer db*/)
