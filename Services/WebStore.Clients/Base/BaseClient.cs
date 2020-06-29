@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace WebStore.Clients.Base
 {
-    public abstract class BaseClient
+    public abstract class BaseClient : IDisposable
     {
         protected readonly string _ServiceAddress;
         protected readonly HttpClient _Client;
@@ -50,5 +50,28 @@ namespace WebStore.Clients.Base
         public HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
         public async Task<HttpResponseMessage> DeleteAsync(string url, CancellationToken Cancel = default) => 
             await _Client.DeleteAsync(url, Cancel);
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        //~BaseClient() => Dispose(false);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // финализация управляемых ресурсов (вызываем Dispose у всего у чего сможем)
+                _Client.Dispose();
+            }
+
+            // финализация неуправляемых ресурсов (на пример неуправляемой памяти)
+        }
+
+        #endregion
     }
 }
