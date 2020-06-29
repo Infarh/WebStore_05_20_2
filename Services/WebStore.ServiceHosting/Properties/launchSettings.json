@@ -20,7 +20,6 @@
     "WebStore.ServiceHosting": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/products/sections",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
