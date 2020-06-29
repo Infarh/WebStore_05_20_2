@@ -24,7 +24,7 @@ namespace WebStore.ServiceHosting.Controllers
             _UserStore = new UserStore<User, Role, WebStoreDB>(db);
         }
 
-        [HttpGet("all")]
+        [HttpGet("all")] // api/users/all
         public async Task<IEnumerable<User>> GetAllUsers() => await _UserStore.Users.ToArrayAsync();
 
         #region Users

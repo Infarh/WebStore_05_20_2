@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Domain;
 using WebStore.Domain.Entities.Identity;
@@ -17,6 +19,9 @@ namespace WebStore.ServiceHosting.Controllers
         {
             _RoleStore = new RoleStore<Role>(db);
         }
+
+        [HttpGet("all")] // api/roles/all
+        public async Task<IEnumerable<Role>> GetAllRoles() => await _RoleStore.Roles.ToArrayAsync();
 
         [HttpPost]
         public async Task<bool> CreateAsync(Role role)
