@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebStore.Domain;
 using WebStore.Domain.Entities.Employees;
 using WebStore.Interfaces.Services;
@@ -14,8 +15,13 @@ namespace WebStore.ServiceHosting.Controllers
     public class EmployeesApiController : ControllerBase, IEmployeesData
     {
         private readonly IEmployeesData _EmployeesData;
+        private readonly ILogger<EmployeesApiController> _Logger;
 
-        public EmployeesApiController(IEmployeesData EmployeesData) => _EmployeesData = EmployeesData;
+        public EmployeesApiController(IEmployeesData EmployeesData, ILogger<EmployeesApiController> Logger)
+        {
+            _EmployeesData = EmployeesData;
+            _Logger = Logger;
+        }
 
         /// <summary>Получить всех сотрудников</summary>
         /// <returns>Перечисление сотрудников магазина</returns>
@@ -34,6 +40,8 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpPost]
         public int Add([FromBody] Employee Employee)
         {
+            _Logger.LogInformation("Добавление нового сотрудника: [{0}]{1} {2} {3}", 
+                Employee.Id, Employee.Surname, Employee.FirstName, Employee.Patronymic);
             var id = _EmployeesData.Add(Employee);
             SaveChanges();
             return id;
@@ -44,6 +52,8 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpPut]
         public void Edit(Employee Employee)
         {
+            _Logger.LogInformation("Редактирование сотрудника: [{0}]{1} {2} {3}",
+                Employee.Id, Employee.Surname, Employee.FirstName, Employee.Patronymic);
             _EmployeesData.Edit(Employee);
             SaveChanges();
         }
@@ -55,6 +65,7 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
+            _Logger.LogInformation("Удаление сотрудника id:{0}", id);
             var success = _EmployeesData.Delete(id);
             SaveChanges();
             return success;
