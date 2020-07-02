@@ -45,17 +45,17 @@ namespace WebStore.Controllers
                 {
                     _Logger.LogInformation("Пользователь {0} успешно зарегистрирован", user.UserName);
                     var add_user_role_result = await _UserManager.AddToRoleAsync(user, Role.User);
-                    if (add_user_role_result.Succeeded)
-                        _Logger.LogInformation("Пользователю успешно добавлена роль {0}", Role.User);
-                    else
-                    {
-                        _Logger.LogError(
-                            "Ошибка при добавлении пользователю роли {0}: {1}",
-                            Role.User,
-                            string.Join(",", add_user_role_result.Errors.Select(error => error.Description)));
+                    //if (add_user_role_result.Succeeded)
+                    //    _Logger.LogInformation("Пользователю успешно добавлена роль {0}", Role.User);
+                    //else
+                    //{
+                    //    _Logger.LogError(
+                    //        "Ошибка при добавлении пользователю роли {0}: {1}",
+                    //        Role.User,
+                    //        string.Join(",", add_user_role_result.Errors.Select(error => error.Description)));
 
-                        throw new ApplicationException("Ошибка наделения нового пользователя ролью Пользователь");
-                    }
+                    //    throw new ApplicationException("Ошибка наделения нового пользователя ролью Пользователь");
+                    //}
 
                     await _SignInManager.SignInAsync(user, false);
                     _Logger.LogInformation("Пользователь {0} успешно пошёл в систему", user.UserName);
