@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
+using WebStore.Logger;
 using WebStore.Services.Data;
 using WebStore.Services.Products.InSQL;
 
@@ -75,8 +76,10 @@ namespace WebStore.ServiceHosting
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db, ILoggerFactory log)
         {
+            log.AddLog4Net();
+
             db.Initialize();
 
             if (env.IsDevelopment())

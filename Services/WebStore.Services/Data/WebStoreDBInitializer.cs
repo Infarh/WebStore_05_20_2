@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 
@@ -13,12 +14,14 @@ namespace WebStore.Services.Data
         private readonly WebStoreDB _db;
         private readonly UserManager<User> _UserManager;
         private readonly RoleManager<Role> _RoleManager;
+        private readonly ILogger<WebStoreDBInitializer> _Logger;
 
-        public WebStoreDBInitializer(WebStoreDB db, UserManager<User> UserManager, RoleManager<Role> RoleManager)
+        public WebStoreDBInitializer(WebStoreDB db, UserManager<User> UserManager, RoleManager<Role> RoleManager, ILogger<WebStoreDBInitializer> Logger)
         {
             _db = db;
             _UserManager = UserManager;
             _RoleManager = RoleManager;
+            _Logger = Logger;
         }
 
         public void Initialize()
@@ -29,7 +32,13 @@ namespace WebStore.Services.Data
             //    if(!db.EnsureCreated())
             //        throw new InvalidOperationException("Ошибка при создании базы данных товаров");
 
-            db.Migrate();
+            if (db.GetPendingMigrations().Any())
+            {
+                _Logger.LogInformation("Подготовка к выполнению миграции БД");
+                db.Migrate();
+                _Logger.LogInformation("Миграция БД выполнена успешно");
+            }
+
 
             InitializeEmployees();
 
