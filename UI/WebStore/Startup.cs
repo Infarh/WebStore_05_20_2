@@ -110,8 +110,6 @@ namespace WebStore
             app.UseStaticFiles();
             app.UseDefaultFiles();
 
-            app.UseWelcomePage("/MVC");
-
             app.UseRouting();
 
             app.UseAuthentication();
