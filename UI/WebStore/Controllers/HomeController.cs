@@ -16,5 +16,17 @@ namespace WebStore.Controllers
         public IActionResult ContactUs() => View();
 
         public IActionResult Error404() => View();
+
+        public IActionResult ErrorStatus(string Code)
+        {
+            switch (Code)
+            {
+                default: 
+                    return Content($"Error code:{Code}");
+
+                case "404":
+                    return RedirectToAction(nameof(Error404));
+            }
+        }
     }
 }
