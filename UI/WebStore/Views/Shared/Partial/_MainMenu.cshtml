@@ -9,12 +9,21 @@
     <li class="dropdown">
         <a href="#">Blog<i class="fa fa-angle-down"></i></a>
         <ul role="menu" class="sub-menu">
-            <li><a href="blog.html">Blog List</a></li>
-            <li><a href="blog-single.html">Blog Single</a></li>
+            <li><a asp-controller="Home" asp-action="Blog">Blog List</a></li>
+            <li><a asp-controller="Home" asp-action="BlogSingle">Blog Single</a></li>
         </ul>
     </li>
-    <li><a href="404.html">Error page 404</a></li>
-    <li><a href="contact-us.html">Contact</a></li>
+    <li><a asp-controller="Home" asp-action="Error404">Error page 404</a></li>
+    <li><a asp-controller="Home" asp-action="ContactUs" class="@IsActive("Home", "ContactUs")">Contact</a></li>
     <li><a asp-controller="Employees" asp-action="Index">Сотрудники</a></li>
-    <li><a asp-controller="WebApiTest" asp-action="Index">WebAPI</a></li>
+    <li><a asp-controller="WebApiTest" asp-action="Index" class="@IsActive("WebApiTest", "Index")">WebAPI</a></li>
 </ul>
+
+@functions
+{
+    string IsActive(string Controller, string Action) =>
+        Equals(Controller, ViewContext.RouteData.Values["Controller"])
+        && Equals(Action, ViewContext.RouteData.Values["Action"])
+            ? "active"
+            : null;
+}
