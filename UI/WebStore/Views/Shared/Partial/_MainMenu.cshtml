@@ -1,21 +1,21 @@
 ﻿<ul class="nav navbar-nav collapse navbar-collapse">
     <li><a asp-controller="Home" asp-action="Index" class="active">Home</a></li>
     <li class="dropdown">
-        <a asp-controller="Catalog" asp-action="Shop">Магазин<i class="fa fa-angle-down"></i></a>
+        <a is-active-route asp-controller="Catalog" asp-action="Shop">Магазин<i class="fa fa-angle-down"></i></a>
         <ul role="menu" class="sub-menu">
             <li><a is-active-route asp-controller="Catalog" asp-action="Shop">Каталог</a></li>
         </ul>
     </li>
     <li class="dropdown">
-        <a href="#">Blog<i class="fa fa-angle-down"></i></a>
+        <a  is-active-route asp-controller="Home" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
         <ul role="menu" class="sub-menu">
-            <li><a asp-controller="Home" asp-action="Blog">Blog List</a></li>
-            <li><a asp-controller="Home" asp-action="BlogSingle">Blog Single</a></li>
+            <li><a is-active-route asp-controller="Home" asp-action="Blog">Blog List</a></li>
+            <li><a is-active-route asp-controller="Home" asp-action="BlogSingle">Blog Single</a></li>
         </ul>
     </li>
     <li><a asp-controller="Home" asp-action="Error404">Error page 404</a></li>
     <li><a asp-controller="Home" asp-action="ContactUs" class="@IsActive("Home", "ContactUs")">Contact</a></li>
-    <li><a asp-controller="Employees" asp-action="Index">Сотрудники</a></li>
+    <li><a is-active-route asp-controller="Employees" asp-action="Index">Сотрудники</a></li>
     <li><a asp-controller="WebApiTest" asp-action="Index" class="@IsActive("WebApiTest", "Index")">WebAPI</a></li>
 </ul>
 
