@@ -1,8 +1,38 @@
-﻿
+﻿@model WebStore.Domain.ViewModels.BreadCrumbViewModel
 
 <div class="breadcrumbs">
     <ol class="breadcrumb">
-        <li><a href="#">Домой</a></li>
-        <li class="active">Корзина</li>
+        <li><a asp-controller="Home" asp-action="Index">Домой</a></li>
+        <li class="active"><a asp-controller="Catalog" asp-action="Shop">Каталог</a></li>
+        @if (Model.Section != null)
+        {
+            if (Model.Section.ParentSection != null)
+            {
+                <li class="active">
+                    <a asp-controller="Catalog" asp-action="Shop" asp-route-SectionId="@Model.Section.ParentSection.Id">
+                        @Model.Section.ParentSection.Name
+                    </a>
+                </li>
+
+            }
+
+            <li class="active">
+                <a asp-controller="Catalog" asp-action="Shop" asp-route-SectionId="@Model.Section.Id">
+                    @Model.Section.Name
+                </a>
+            </li>
+        }
+        @if (Model.Brand != null)
+        {
+            <li class="active">
+                <a asp-controller="Catalog" asp-action="Shop" asp-route-BrandId="@Model.Brand.Id">
+                    @Model.Brand.Name
+                </a>
+            </li>
+        }
+        @if (Model.Product != null)
+        {
+            <li>@Model.Product</li>
+        }
     </ol>
 </div>
