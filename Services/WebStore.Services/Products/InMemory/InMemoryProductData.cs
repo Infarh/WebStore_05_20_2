@@ -12,7 +12,11 @@ namespace WebStore.Services.Products.InMemory
     {
         public IEnumerable<Section> GetSections() => TestData.Sections;
 
+        public Section GetSection(int Id) => TestData.Sections.FirstOrDefault(s => s.Id == Id);
+
         public IEnumerable<Brand> GetBrands() => TestData.Brands;
+
+        public Brand GetBrand(int Id) => TestData.Brands.FirstOrDefault(b => b.Id == Id);
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
         {

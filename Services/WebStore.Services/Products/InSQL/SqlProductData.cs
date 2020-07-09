@@ -17,7 +17,11 @@ namespace WebStore.Services.Products.InSQL
 
         public IEnumerable<Section> GetSections() => _db.Sections;
 
+        public Section GetSection(int Id) => _db.Sections.Include(s => s.ParentSection).FirstOrDefault(s => s.Id == Id);
+
         public IEnumerable<Brand> GetBrands() => _db.Brands;
+
+        public Brand GetBrand(int Id) => _db.Brands.Find(Id);
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
         {
