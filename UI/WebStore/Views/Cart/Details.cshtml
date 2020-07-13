@@ -42,6 +42,7 @@
                                     <a asp-controller="Cart"
                                        asp-action="AddToCart"
                                        asp-route-id="@product.Id"
+                                       data-id="@product.Id"
                                        class="cart_quantity_up">
                                          +
                                     </a>
@@ -53,19 +54,21 @@
                                            size="2">
                                     <a asp-action="DecrementFromCart"
                                        asp-route-id="@product.Id"
+                                       data-id="@product.Id"
                                        class="cart_quantity_down">
                                          -
                                     </a>
                                 </div>
                             </td>
-                            <td class="cart_total" data-price="@(product.Price * quantity)">
-                                <p class="cart_total_price" >
+                            <td class="cart_total">
+                                <p class="cart_total_price" data-price="@(product.Price * quantity)">
                                     @((product.Price * quantity).ToString("C"))
                                 </p>
                             </td>
                             <td class="cart_delete">
                                 <a asp-action="RemoveFromCart"
                                    asp-route-id="@product.Id"
+                                   data-id="@product.Id"
                                    class="cart_quantity_delete">
                                     <i class="fa fa-times"></i>
                                 </a>
