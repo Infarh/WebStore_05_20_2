@@ -92,10 +92,16 @@
     removeItem: function(event) {
         event.preventDefault();
 
-        var button = $(this);
+        const button = $(this);
         const id = button.data("id"); // data-id="..."
 
-
+        $.get(Cart._properties.removeFromCart + "/" + id)
+            .done(function () {
+                button.closest("tr").remove();
+                Cart.refreshTotalPrice();
+                Cart.refreshCartView();
+            })
+            .fail(function () { console.log("removeItem fail"); });
     },
 
     refreshPrice: function(container) {
