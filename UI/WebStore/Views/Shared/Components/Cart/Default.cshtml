@@ -1,0 +1,7 @@
+﻿@model WebStore.Domain.ViewModels.CartViewModel
+@{
+    var product_count = Model.ItemsCount > 0 ? Model.ItemsCount : (int?)null;
+    var product_count_str = product_count is null ? null : $" ({product_count})";
+}
+
+<i class="fa fa-shopping-cart"></i> Корзина @product_count_str
