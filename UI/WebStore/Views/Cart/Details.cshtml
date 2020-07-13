@@ -34,21 +34,41 @@
                                 <h4><a asp-controller="Catalog" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></h4>
                                 <p>арт.: @product.Id.ToString("0000000")</p>
                             </td>
-                            <td class="cart_price">
+                            <td class="cart_price" data-price="@product.Price">
                                 <p>@product.Price.ToString("C")</p>
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id"> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="@quantity" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" asp-action="DecrementFromCart" asp-route-id="@product.Id"> - </a>
+                                    <a asp-controller="Cart"
+                                       asp-action="AddToCart"
+                                       asp-route-id="@product.Id"
+                                       class="cart_quantity_up">
+                                         +
+                                    </a>
+                                    <input class="cart_quantity_input" 
+                                           type="text" 
+                                           name="quantity"
+                                           value="@quantity" 
+                                           autocomplete="off" 
+                                           size="2">
+                                    <a asp-action="DecrementFromCart"
+                                       asp-route-id="@product.Id"
+                                       class="cart_quantity_down">
+                                         -
+                                    </a>
                                 </div>
                             </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">@((product.Price * quantity).ToString("C"))</p>
+                            <td class="cart_total" data-price="@(product.Price * quantity)">
+                                <p class="cart_total_price" >
+                                    @((product.Price * quantity).ToString("C"))
+                                </p>
                             </td>
                             <td class="cart_delete">
-                                <a class="cart_quantity_delete"  asp-action="RemoveFromCart" asp-route-id="@product.Id"><i class="fa fa-times"></i></a>
+                                <a asp-action="RemoveFromCart"
+                                   asp-route-id="@product.Id"
+                                   class="cart_quantity_delete">
+                                    <i class="fa fa-times"></i>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -64,10 +84,10 @@
             <h3>Что бы Вы хотели сделать далее?</h3>
             <p>Выберите, есть ли у вас код скидки или бонусные баллы, которые вы хотите использовать или хотите оценить стоимость доставки.</p>
         </div>
-       
+
         @{
             var sum_cart = Model.Cart.Items.Sum(item => item.Product.Price * item.Quantity);
         }
-        <partial name="Partial/_CheckOut" model="@Model.Order" view-data="@(new ViewDataDictionary(ViewData) { { "SumCart", sum_cart } })"/>
+        <partial name="Partial/_CheckOut" model="@Model.Order" view-data="@(new ViewDataDictionary(ViewData) { { "SumCart", sum_cart } })" />
     </div>
 </section><!--/#do_action-->
