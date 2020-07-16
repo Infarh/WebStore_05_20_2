@@ -22,6 +22,13 @@ namespace WebStore.Controllers
             _Logger = Logger;
         }
 
+        public async Task<IActionResult> IsNameFree(string UserName)
+        {
+            var user = await _UserManager.FindByNameAsync(UserName);
+            _Logger.LogInformation("Пользователь {0} {1} существует", UserName, user is null ? "не" : null);
+            return Json(user is null ? "true" : "Пользователь с таким именем уже существует");
+        }
+
         #region Register new user
 
         public IActionResult Register() => View(new RegisterUserViewModel());
@@ -30,7 +37,6 @@ namespace WebStore.Controllers
         public async Task<IActionResult> Register(RegisterUserViewModel Model)
         {
             if (!ModelState.IsValid) return View(Model);
-
 
             var user = new User
             {
