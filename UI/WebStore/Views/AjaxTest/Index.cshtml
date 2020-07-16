@@ -27,7 +27,14 @@
         <div class="col-sm-4">
             <h4>Рендринг на стороне клиента</h4>
 
-            <a class="btn btn-default">Загрузка</a>
+            <a class="btn btn-default"
+               data-ajax="true"
+               data-ajax-url="@Url.Action("GetJSON", "AjaxTest", new { id = 13, msg = "Hello World!!!" })"
+               data-ajax-loading="#spnner-clinet"
+               data-ajax-success="OnLoaded"
+               >
+                Загрузка
+            </a>
             
             <span id="spnner-clinet" style="display: none">
                 <i class="fa fa-spinner fa-spin"></i>
@@ -46,3 +53,15 @@
     </div>
 </div>
 
+@section Scripts
+{
+    <script>
+        OnLoaded = data => {
+            const host = $("#panel-client");
+            host.empty();
+            host.append("msg: " + data.message);
+            host.append("<br/>");
+            host.append("time: " + data.serverTime);
+        }
+    </script>
+}
