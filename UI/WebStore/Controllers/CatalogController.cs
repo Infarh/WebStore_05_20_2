@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -87,6 +86,5 @@ namespace WebStore.Controllers
                .OrderBy(p => p.Order);
 
         #endregion
-
     }
 }

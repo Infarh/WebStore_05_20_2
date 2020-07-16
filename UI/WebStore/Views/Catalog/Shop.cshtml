@@ -4,18 +4,18 @@
 
 <section>
     <div class="container">
-        <vc:bread-crumbs/>
+        <vc:bread-crumbs />
 
         <div class="row">
             <div class="col-sm-3">
-                <partial name="Partial/_LeftSideBar"/>
+                <partial name="Partial/_LeftSideBar" />
             </div>
 
             <div class="col-sm-9 padding-right">
                 <div id="catalog-items-container">
                     <partial name="Partial/_FeaturesItems" model="Model.Products" />
                 </div>
-                
+
                 <paging page-model="@Model.PageViewModel"
                         page-action="Shop"
                         page-url-SectionId="@Model.SectionId"
@@ -25,3 +25,16 @@
         </div>
     </div>
 </section>
+
+@section Scripts
+{
+    <script src="~/lib/jquery-loading-overlay/loadingoverlay.min.js"></script>
+    <script src="~/js/Catalog/CatalogLogik.js" asp-append-version="true"></script>
+    <script>
+        $(function() {
+            Catalog.init({
+                getUrl: "@Url.Action("GetCatalogHtml","Catalog")"
+            });
+        })
+    </script>
+}
