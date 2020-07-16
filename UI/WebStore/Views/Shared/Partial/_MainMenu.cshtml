@@ -7,7 +7,7 @@
         </ul>
     </li>
     <li class="dropdown">
-        <a  is-active-route asp-controller="Home" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
+        <a is-active-route asp-controller="Home" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
         <ul role="menu" class="sub-menu">
             <li><a is-active-route asp-controller="Home" asp-action="Blog">Blog List</a></li>
             <li><a is-active-route asp-controller="Home" asp-action="BlogSingle">Blog Single</a></li>
@@ -16,8 +16,16 @@
     <li><a asp-controller="Home" asp-action="Error404">Error page 404</a></li>
     <li><a asp-controller="Home" asp-action="ContactUs" class="@IsActive("Home", "ContactUs")">Contact</a></li>
     <li><a is-active-route asp-controller="Employees" asp-action="Index">Сотрудники</a></li>
-    <li><a asp-controller="WebApiTest" asp-action="Index" class="@IsActive("WebApiTest", "Index")">WebAPI</a></li>
-    <li><a asp-controller="AjaxTest" asp-action="Index">AJAX</a></li>
+
+    <li class="dropdown">
+        <a href="#">Tests<i class="fa fa-angle-down"></i></a>
+        <ul role="menu" class="sub-menu">
+            <li><a asp-controller="WebApiTest" asp-action="Index" class="@IsActive("WebApiTest", "Index")">WebAPI</a></li>
+            <li><a asp-controller="AjaxTest" asp-action="Index">AJAX</a></li>
+            <li><a asp-controller="AjaxTest" asp-action="SignalRTest">SignalR</a></li>
+        </ul>
+    </li>
+    
 </ul>
 
 @functions
