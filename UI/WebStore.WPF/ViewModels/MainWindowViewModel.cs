@@ -50,7 +50,7 @@ namespace WebStore.WPF.ViewModels
         #region HubName : string - Имя хаба
 
         /// <summary>Имя хаба</summary>
-        private string _HubName;
+        private string _HubName = "Chat";
 
         /// <summary>Имя хаба</summary>
         public string HubName { get => _HubName; set => Set(ref _HubName, value); }

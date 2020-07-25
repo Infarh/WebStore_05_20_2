@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="WebStore.WPF.Views.ChatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WebStore.WPF.Views"
+             xmlns:vm="clr-namespace:WebStore.WPF.ViewModels"
+             xmlns:m="clr-namespace:WebStore.WPF.Models"
+             d:DesignWidth="800" d:DesignHeight="450"
+             DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <UniformGrid DockPanel.Dock="Right" Rows="1">
+                <Button Content="Подключиться" Margin="3" Padding="3,0" Command="{Binding ConnectCommand}"/>
+                <Button Content="Отключиться" Margin="3" Padding="3,0" Command="{Binding DisconnectCommand}"/>
+            </UniformGrid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="40"/>
+                    <ColumnDefinition MinWidth="40"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0" Header="Сервер" BorderThickness="0">
+                    <TextBox Text="{Binding Address}"/>
+                </GroupBox>
+                <GroupBox Grid.Column="1" Header="Хаб" BorderThickness="0">
+                    <TextBox Text="{Binding HubName}"/>
+                </GroupBox>
+                <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="3" Background="Transparent"/>
+            </Grid>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Right" Content="Отправить" Margin="3" Padding="5,0" Command="{Binding SendCommand}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="60" Width="4*"/>
+                    <ColumnDefinition MinWidth="60" Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0" Header="Сообщение">
+                    <TextBox Text="{Binding Message}"/>
+                </GroupBox>
+                <GroupBox Grid.Column="1" Header="Пользователь">
+                    <TextBox Text="{Binding UserName}"/>
+                </GroupBox>
+            </Grid>
+        </DockPanel>
+        <ListBox ItemsSource="{Binding Messages}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="m:UserMessage">
+                    <GroupBox Content="{Binding Message}">
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Time, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
+                                <TextBlock Text="{Binding User}"/>
+                            </StackPanel>
+                        </GroupBox.Header>
+                    </GroupBox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</UserControl>
