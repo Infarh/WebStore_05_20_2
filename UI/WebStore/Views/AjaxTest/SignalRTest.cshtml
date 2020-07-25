@@ -8,6 +8,9 @@
     
     <div>
         <div id="input-form">
+            <label>User:</label>
+            <input type="text" id="user" value="WebUser"/>
+            <label>Message:</label>
             <input type="text" id="message"/>
             <input type="button" value="Отправить" id="send-button" class="btn btn-primary"/>
         </div>
@@ -18,17 +21,25 @@
 
 @section Scripts {
     <script src="~/lib/aspnet-signalr/signalr.min.js"></script>
-    
+
     <script>
-        const hub_url = "/info";
+        const hub_url = "/chat";
 
         const connection = new signalR.HubConnectionBuilder()
             .withUrl(hub_url)
             .build();
 
-        connection.on("Send", data => $("#information-block").prepend($("<li></li>").html(data)));
+        connection.on("OutputMessage",
+            (user, message) =>
+            $("#information-block")
+            .prepend($("<li></li>")
+                .html(user + ":" + message)));
 
-        $("#send-button").click(e => connection.invoke("Send", $("#message").val()));
+        $("#send-button").click(e => {
+            const user = $("#user").val();
+            const message = $("#message").val();
+            connection.invoke("InputMessage", user, message);
+        });
 
         connection.start();
     </script>
