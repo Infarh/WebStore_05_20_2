@@ -1,6 +1,7 @@
 ﻿using System;
+using WebStore.WPF.Infrastructure.Commands.Base;
 
-namespace WebStore.WPF.Infrastructure.Commands.Base
+namespace WebStore.WPF.Infrastructure.Commands
 {
     internal class LambdaCommand : Command
     {

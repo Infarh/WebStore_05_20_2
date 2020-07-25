@@ -42,6 +42,11 @@ namespace WebStore.WPF.Services
             return Task.CompletedTask;
         }
 
+        public async Task Invoke(string Method, params object[] args)
+        {
+            await _Hub.Invoke(Method, args);
+        }
+
         public async Task<T> Invoke<T>(string Method, params object[] args)
         {
             return await _Hub.Invoke<T>(Method, args);

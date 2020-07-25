@@ -13,6 +13,7 @@ namespace WebStore.WPF.Services.Interfaces
 
         Task Disconnect();
 
+        Task Invoke(string Method, params object[] args);
         Task<T> Invoke<T>(string Method, params object[] args);
         Task Invoke<TProgress>(string Method, Action<TProgress> Progress, params object[] args);
         Task<TResult> Invoke<TProgress, TResult>(string Method, Action<TProgress> Progress, params object[] args);
