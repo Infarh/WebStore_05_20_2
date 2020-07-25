@@ -4,12 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WebStore.WPF"
+        xmlns:views="clr-namespace:WebStore.WPF.Views"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         Title="{Binding Title}"
         Width="800" Height="450">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
+                <MenuItem Header="Запустить ещё один экземпляр" Command="{StaticResource StartNewInstanceCommand}"/>
+                <Separator/>
                 <MenuItem Header="Выход" Command="{StaticResource CloseWindowCommand}"/>
             </MenuItem>
         </Menu>
@@ -19,6 +22,8 @@
             </StatusBarItem>
             <StatusBarItem Content="{Binding Status}"/>
         </StatusBar>
-        <Grid></Grid>
+        <Grid>
+            <views:ChatView/>
+        </Grid>
     </DockPanel>
 </Window>

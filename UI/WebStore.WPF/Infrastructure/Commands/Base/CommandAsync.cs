@@ -7,23 +7,12 @@ namespace WebStore.WPF.Infrastructure.Commands.Base
     internal abstract class CommandAsync : ICommand
     {
         private bool _Executing;
-        private event EventHandler _CanExecuteChanged;
 
         public event EventHandler CanExecuteChanged
         {
-            add
-            {
-                CommandManager.RequerySuggested += value;
-                _CanExecuteChanged += value;
-            }
-            remove
-            {
-                CommandManager.RequerySuggested -= value;
-                _CanExecuteChanged -= value;
-            }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
-
-        protected virtual void OnCanExecuteChanged(EventArgs e = null) => _CanExecuteChanged?.Invoke(this, e ?? EventArgs.Empty);
 
         bool ICommand.CanExecute(object parameter) => !_Executing && CanExecute(parameter);
 
@@ -33,14 +22,14 @@ namespace WebStore.WPF.Infrastructure.Commands.Base
             _Executing = true;
             try
             {
-                OnCanExecuteChanged();
+                CommandManager.InvalidateRequerySuggested();
                 await ExecuteAsync(parameter);
             }
             finally
             {
                 _Executing = false;
             }
-            OnCanExecuteChanged();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         protected virtual bool CanExecute(object parameter) => true;

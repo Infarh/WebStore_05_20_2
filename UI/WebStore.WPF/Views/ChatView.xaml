@@ -14,19 +14,9 @@
                 <Button Content="Подключиться" Margin="3" Padding="3,0" Command="{Binding ConnectCommand}"/>
                 <Button Content="Отключиться" Margin="3" Padding="3,0" Command="{Binding DisconnectCommand}"/>
             </UniformGrid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="40"/>
-                    <ColumnDefinition MinWidth="40"/>
-                </Grid.ColumnDefinitions>
-                <GroupBox Grid.Column="0" Header="Сервер" BorderThickness="0">
-                    <TextBox Text="{Binding Address}"/>
-                </GroupBox>
-                <GroupBox Grid.Column="1" Header="Хаб" BorderThickness="0">
-                    <TextBox Text="{Binding HubName}"/>
-                </GroupBox>
-                <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="3" Background="Transparent"/>
-            </Grid>
+            <GroupBox Header="Сервер" BorderThickness="0">
+                <TextBox Text="{Binding Address}"/>
+            </GroupBox>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom">
             <Button DockPanel.Dock="Right" Content="Отправить" Margin="3" Padding="5,0" Command="{Binding SendCommand}"/>
@@ -36,23 +26,46 @@
                     <ColumnDefinition MinWidth="60" Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <GroupBox Grid.Column="0" Header="Сообщение">
-                    <TextBox Text="{Binding Message}"/>
+                    <TextBox Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 </GroupBox>
                 <GroupBox Grid.Column="1" Header="Пользователь">
-                    <TextBox Text="{Binding UserName}"/>
+                    <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
                 </GroupBox>
             </Grid>
         </DockPanel>
         <ListBox ItemsSource="{Binding Messages}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="m:UserMessage">
-                    <GroupBox Content="{Binding Message}">
+                    <GroupBox>
+                        <GroupBox.Style>
+                            <Style TargetType="GroupBox">
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                                <Style.Triggers>
+                                    <DataTrigger Value="True">
+                                        <DataTrigger.Binding>
+                                            <MultiBinding Converter="{StaticResource EqualsMultiConverter}">
+                                                <Binding Path="User"/>
+                                                <Binding RelativeSource="{RelativeSource AncestorType=ListBox}"
+                                                         Path="DataContext.UserName"/>
+                                            </MultiBinding>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </GroupBox.Style>
                         <GroupBox.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Time, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
+                            <TextBlock>
+                                <TextBlock Text="{Binding Time, StringFormat=dd.MM.yyyy HH:mm:ss}"/>:
                                 <TextBlock Text="{Binding User}"/>
-                            </StackPanel>
+                            </TextBlock>
                         </GroupBox.Header>
+                        <TextBlock Text="{Binding Message}"/>
                     </GroupBox>
                 </DataTemplate>
             </ListBox.ItemTemplate>

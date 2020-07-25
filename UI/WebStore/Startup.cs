@@ -128,6 +128,7 @@ namespace WebStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<InformationHub>("/info");
+                endpoints.MapHub<ChatHub>("/chat");
 
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToFile("blazor.html");

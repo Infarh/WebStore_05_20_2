@@ -3,5 +3,6 @@
                     xmlns:local="clr-namespace:WebStore.WPF.Infrastructure.Commands">
 
     <local:CloseWindow x:Key="CloseWindowCommand"/>
+    <local:StartNewInstance x:Key="StartNewInstanceCommand"/>
 
 </ResourceDictionary>

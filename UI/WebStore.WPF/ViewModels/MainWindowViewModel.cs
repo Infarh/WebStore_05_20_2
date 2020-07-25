@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Extensions.Options;
 using WebStore.WPF.Infrastructure.Commands;
@@ -40,20 +42,10 @@ namespace WebStore.WPF.ViewModels
         #region Address : string - Адрес сервиса
 
         /// <summary>Адрес сервиса</summary>
-        private string _Address = "http://localhost:5000/information";
+        private string _Address = "http://localhost:5000/chat";
 
         /// <summary>Адрес сервиса</summary>
         public string Address { get => _Address; set => Set(ref _Address, value); }
-
-        #endregion
-
-        #region HubName : string - Имя хаба
-
-        /// <summary>Имя хаба</summary>
-        private string _HubName = "Chat";
-
-        /// <summary>Имя хаба</summary>
-        public string HubName { get => _HubName; set => Set(ref _HubName, value); }
 
         #endregion
 
@@ -96,9 +88,16 @@ namespace WebStore.WPF.ViewModels
         /// <summary>Логика выполнения - Подключиться к сервису</summary>
         private async Task OnConnectCommandExecuted()
         {
-         
-            await _InformationService.ConnectTo(Address, HubName);
-            _InformationService.Listen<string, string>("ChatMessage", OnChatMessageReceived);
+
+            try
+            {
+                await _InformationService.ConnectTo(Address);
+                _InformationService.Listen<string, string>("OutputMessage", OnChatMessageReceived);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка подключения", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         #endregion
@@ -151,9 +150,9 @@ namespace WebStore.WPF.ViewModels
             Title = Options.Value.Title;
         }
 
-        private void OnChatMessageReceived(string User, string Message)
+        private void OnChatMessageReceived(string UserName, string MessageText)
         {
-            var message = new UserMessage(User, Message);
+            var message = new UserMessage(UserName, MessageText);
             Messages.Add(message);
         }
     }

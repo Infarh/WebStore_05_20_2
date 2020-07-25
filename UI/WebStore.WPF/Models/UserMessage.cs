@@ -14,6 +14,10 @@ namespace WebStore.WPF.Models
 
         public UserMessage() { }
 
-        public UserMessage(string User, string Message) { }
+        public UserMessage(string User, string Message)
+        {
+            this.User = User;
+            this.Message = Message;
+        }
     }
 }

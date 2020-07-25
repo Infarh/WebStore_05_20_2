@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="Infrastructure/Commands/Commands.xaml"/>
+                <ResourceDictionary Source="Infrastructure/Converters/Converters.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
 
